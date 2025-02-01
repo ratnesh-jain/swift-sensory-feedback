@@ -12,6 +12,7 @@ import UIKit
 
 @DependencyClient
 public struct SensoryFeedbackClient: Sendable {
+    public var allowFeedback: @Sendable () -> Bool = { true }
     public var notify: @Sendable (_ type: UINotificationFeedbackGenerator.FeedbackType) -> Void
     public var impact: @Sendable (_ style: UIImpactFeedbackGenerator.FeedbackStyle, _ intesity: CGFloat) -> Void
     public var selection: @Sendable () -> Void
@@ -30,7 +31,9 @@ extension SensoryFeedbackClient: DependencyKey {
         return generator
     }()
     
-    public static let liveValue: SensoryFeedbackClient = .init { feedbackType in
+    public static let liveValue: SensoryFeedbackClient = .init {
+        true
+    } notify: { feedbackType in
         Task { @MainActor in
             notificationFeedback.notificationOccurred(feedbackType)
         }
