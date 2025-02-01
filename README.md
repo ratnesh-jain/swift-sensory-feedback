@@ -31,6 +31,10 @@ The primary reason to choose this is its context awareness, it allows us to chan
 
 ## Usage:
 Library provide three inbuild feedback methods
+- Allow Feedback
+```swift
+  public var allowFeedback: @Sendable () -> Bool = { true }
+```
 - UINotificationFeedbackGenerator
 ```swift
   public var notify: @Sendable (_ type: UINotificationFeedbackGenerator.FeedbackType) -> Void
